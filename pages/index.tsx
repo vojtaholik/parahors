@@ -59,13 +59,13 @@ const LandingPage: React.FC<{ works: any }> = ({ works }) => {
                 // className={`py-16 flex flex-col items-center justify-center ${colSpan}`}
                 className={`py-16 flex flex-col items-center justify-center cursor-pointer`}
               >
-                <div className="flex items-center justify-center w-full">
+                <div className="flex items-center justify-center w-full group rounded-md overflow-hidden">
                   <Image
                     placeholder="blur"
                     quality={50}
                     src={require(`../public/${FOLDER}/${work.src}`)}
                     alt={fileName}
-                    className="rounded-md hover:scale-105 transition-transform ease-in-out duration-300"
+                    className="group-hover:scale-105 transition-transform ease-in-out duration-300 rounded-md"
                   />
                 </div>
                 <div className="text-gray-400 font-mono text-xs pt-8">
