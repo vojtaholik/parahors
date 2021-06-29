@@ -10,7 +10,17 @@ import { SRLWrapper } from 'simple-react-lightbox'
 const { serverRuntimeConfig } = getConfig()
 const FOLDER = 'illustrations'
 
+function getCaption(name: string) {
+  return name
+    .replace('@2x', '')
+    .replace('.jpg', '')
+    .replace('.png', '')
+    .replace('.jpeg', '')
+}
+
 const LandingPage: React.FC<{ works: any }> = ({ works }) => {
+  const [loadAll, setLoadAll] = React.useState(false)
+
   return (
     <div className="p-5">
       <div className="min-h-[60vh] flex items-center justify-center">
@@ -24,27 +34,10 @@ const LandingPage: React.FC<{ works: any }> = ({ works }) => {
           />
         </div>
       </div>
-      <SRLWrapper
-        elements={works.map((work: any) => {
-          return {
-            src: work.src,
-            caption: work.src
-              .replace('@2x', '')
-              .replace('.jpg', '')
-              .replace('.png', '')
-              .replace('.jpeg', ''),
-          }
-        })}
-      >
-        <div className="grid w-full max-w-screen-xl lg:grid-cols-2 grid-cols-1 lg:gap-8 mx-auto ">
+      <SRLWrapper>
+        <div className="grid w-full max-w-screen-xl lg:grid-cols-2 grid-cols-1 lg:gap-8 mx-auto">
           {works.map((work: any, i: number) => {
-            const fileName = work.src
-              .replace('@2x', '')
-              .replace('.jpg', '')
-              .replace('.png', '')
-              .replace('.jpeg', '')
-            // .replace(`.${work.size.type}`, '')
-            // const [isReady, setIsReady] = React.useState(false)
+            const fileName = getCaption(work.src)
             const randomNr = Math.floor(Math.random() * (6 - 3) + 3)
             const colSpan =
               i % 3 == 0
@@ -59,13 +52,19 @@ const LandingPage: React.FC<{ works: any }> = ({ works }) => {
                 // className={`py-16 flex flex-col items-center justify-center ${colSpan}`}
                 className={`py-16 flex flex-col items-center justify-center cursor-pointer`}
               >
-                <div className="flex items-center justify-center w-full group rounded-md overflow-hidden">
+                <div
+                  className="flex items-center justify-center w-full group rounded-md overflow-hidden"
+                  onClick={() => !loadAll && setLoadAll(true)}
+                >
                   <Image
+                    // @ts-ignore
+                    srl_gallery_image="true"
                     placeholder="blur"
                     quality={50}
                     src={require(`../public/${FOLDER}/${work.src}`)}
                     alt={fileName}
                     className="group-hover:scale-105 transition-transform ease-in-out duration-300 rounded-md"
+                    loading={loadAll ? 'eager' : 'lazy'}
                   />
                 </div>
                 <div className="text-gray-400 font-mono text-xs pt-8">
@@ -81,7 +80,6 @@ const LandingPage: React.FC<{ works: any }> = ({ works }) => {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  // const WORKS_PATH = path.join(process.cwd(), `public/${FOLDER}`)
   const WORKS_PATH = path.join(
     serverRuntimeConfig.PROJECT_ROOT,
     `public/${FOLDER}`
@@ -90,11 +88,8 @@ export const getStaticProps: GetStaticProps = async () => {
   const works = workFiles
     .filter((work) => work.isFile()) // is not a folder
     .map((work) => {
-      // const input = fs.readFileSync(WORKS_PATH + '/' + work.name)
-      // const size = probe.sync(input)
       return {
         src: work.name,
-        //  size
       }
     })
   console.log(works)
