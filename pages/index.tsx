@@ -81,6 +81,7 @@ export const getStaticProps: GetStaticProps = async () => {
   const workFiles = fs.readdirSync(WORKS_PATH, { withFileTypes: true })
   const works = workFiles
     .filter((work) => work.isFile())
+    .sort()
     .map((work) => {
       return {
         src: work.name,
