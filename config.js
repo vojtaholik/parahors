@@ -1,6 +1,6 @@
 export default {
   defaultTitle: 'Parahors',
-  description: 'Illustration boutique from Czech Republic',
+  description: 'Illustration boutique from Czech Republic.',
   author: 'Parahors',
   email: 'nik.dobes@seznam.cz',
   siteUrl: 'parahors.vercel.app',
@@ -19,7 +19,7 @@ export default {
   },
   openGraph: {
     title: 'Parahors',
-    description: 'Illustration boutique from Czech Republic',
+    description: 'Illustration boutique from Czech Republic.',
     type: 'website',
     site_name: 'Parahors',
     profile: {
