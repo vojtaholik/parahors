@@ -8,7 +8,12 @@ import Logo from '../public/logo.jpeg'
 import { SRLWrapper } from 'simple-react-lightbox'
 
 const { serverRuntimeConfig } = getConfig()
-const FOLDER = 'illustrations'
+const IMGS_DIR = 'illustrations'
+const lightboxOptions = {
+  buttons: {
+    showDownloadButton: false,
+  },
+}
 
 function getCaption(name: string) {
   return name
@@ -34,22 +39,13 @@ const LandingPage: React.FC<{ works: any }> = ({ works }) => {
           />
         </div>
       </div>
-      <SRLWrapper>
+      <SRLWrapper options={lightboxOptions}>
         <div className="grid w-full max-w-screen-xl lg:grid-cols-2 grid-cols-1 lg:gap-8 mx-auto">
           {works.map((work: any, i: number) => {
-            const fileName = getCaption(work.src)
-            const randomNr = Math.floor(Math.random() * (6 - 3) + 3)
-            const colSpan =
-              i % 3 == 0
-                ? `col-span-${randomNr}`
-                : i % 4 == 0
-                ? `col-start-2 col-span-${randomNr}`
-                : `col-start-3 col-span-5`
-
+            const caption = getCaption(work.src)
             return (
               <div
-                key={fileName}
-                // className={`py-16 flex flex-col items-center justify-center ${colSpan}`}
+                key={caption}
                 className={`py-16 flex flex-col items-center justify-center cursor-pointer`}
               >
                 <div
@@ -57,18 +53,16 @@ const LandingPage: React.FC<{ works: any }> = ({ works }) => {
                   onClick={() => !loadAll && setLoadAll(true)}
                 >
                   <Image
-                    // @ts-ignore
-                    srl_gallery_image="true"
                     placeholder="blur"
                     quality={50}
-                    src={require(`../public/${FOLDER}/${work.src}`)}
-                    alt={fileName}
+                    src={require(`../public/${IMGS_DIR}/${work.src}`)}
+                    alt={caption}
                     className="group-hover:scale-105 transition-transform ease-in-out duration-300 rounded-md"
                     loading={loadAll ? 'eager' : 'lazy'}
                   />
                 </div>
                 <div className="text-gray-400 font-mono text-xs pt-8">
-                  {fileName}
+                  {caption}
                 </div>
               </div>
             )
@@ -82,17 +76,20 @@ const LandingPage: React.FC<{ works: any }> = ({ works }) => {
 export const getStaticProps: GetStaticProps = async () => {
   const WORKS_PATH = path.join(
     serverRuntimeConfig.PROJECT_ROOT,
-    `public/${FOLDER}`
+    `public/${IMGS_DIR}`
   )
   const workFiles = fs.readdirSync(WORKS_PATH, { withFileTypes: true })
   const works = workFiles
-    .filter((work) => work.isFile()) // is not a folder
+    .filter((work) => work.isFile())
     .map((work) => {
       return {
         src: work.name,
       }
     })
-  console.log(works)
+
+  if (process.env.NODE_ENV === 'development') {
+    console.log({ works })
+  }
 
   return {
     props: {
