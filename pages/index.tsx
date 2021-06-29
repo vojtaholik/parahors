@@ -61,9 +61,6 @@ const LandingPage: React.FC<{ works: any }> = ({ works }) => {
                     loading={loadAll ? 'eager' : 'lazy'}
                   />
                 </div>
-                <div className="text-gray-400 font-mono text-xs pt-8">
-                  {caption}
-                </div>
               </div>
             )
           })}
