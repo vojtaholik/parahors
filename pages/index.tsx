@@ -1,11 +1,13 @@
 import * as React from 'react'
 import { GetStaticProps } from 'next'
+import getConfig from 'next/config'
 import fs from 'fs'
 import path from 'path'
 import Image from 'next/image'
 import Logo from '../public/logo.jpeg'
 import { SRLWrapper } from 'simple-react-lightbox'
 
+const { serverRuntimeConfig } = getConfig()
 const FOLDER = 'illustrations'
 
 const LandingPage: React.FC<{ works: any }> = ({ works }) => {
@@ -79,7 +81,11 @@ const LandingPage: React.FC<{ works: any }> = ({ works }) => {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const WORKS_PATH = path.join(process.cwd(), `public/${FOLDER}`)
+  // const WORKS_PATH = path.join(process.cwd(), `public/${FOLDER}`)
+  const WORKS_PATH = path.join(
+    serverRuntimeConfig.PROJECT_ROOT,
+    `public/${FOLDER}`
+  )
   const workFiles = fs.readdirSync(WORKS_PATH, { withFileTypes: true })
   const works = workFiles
     .filter((work) => work.isFile()) // is not a folder

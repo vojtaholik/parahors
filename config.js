@@ -1,6 +1,6 @@
 export default {
   defaultTitle: 'Parahors',
-  description: 'Illustration butique from Czech Republic',
+  description: 'Illustration boutique from Czech Republic',
   author: 'Parahors',
   email: 'nik.dobes@seznam.cz',
   siteUrl: 'parahors.vercel.app',
@@ -11,7 +11,7 @@ export default {
     {
       property: 'keywords',
       content:
-        'illustration, illustrators, czech republic, cz, brno, street art',
+        'illustration, illustrators, parahors, parahorse, czech republic, cz, brno, street art',
     },
   ],
   twitter: {
@@ -19,7 +19,7 @@ export default {
   },
   openGraph: {
     title: 'Parahors',
-    description: 'Illustration butique from Czech Republic',
+    description: 'Illustration boutique from Czech Republic',
     type: 'website',
     site_name: 'Parahors',
     profile: {
