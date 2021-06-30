@@ -40,8 +40,8 @@ const LandingPage: React.FC<{ works: any }> = ({ works }) => {
   const [loadAll, setLoadAll] = React.useState(false)
 
   return (
-    <div className="p-5 bg-gray-100 lg:pb-24 sm:pb-16 pb-8">
-      <div className="-mx-5">
+    <div className="sm:p-8 p-5 bg-gray-100 lg:pb-24 sm:pb-16 pb-8">
+      <div className="sm:-m-8 -m-5">
         <header className="min-h-[60vh] flex items-center justify-center w-full bg-white">
           <div className="max-w-screen-md">
             <Image
@@ -54,8 +54,9 @@ const LandingPage: React.FC<{ works: any }> = ({ works }) => {
           </div>
         </header>
       </div>
+
       <SRLWrapper options={lightboxOptions}>
-        <div className="grid w-full max-w-screen-2xl xl:grid-cols-3 sm:grid-cols-2 grid-cols-1 sm:gap-8 gap-5 mx-auto sm:pt-8 pt-5">
+        <div className="grid w-full max-w-screen-2xl xl:grid-cols-3 sm:grid-cols-2 grid-cols-1 sm:gap-8 gap-5 mx-auto sm:pt-16 pt-10">
           {works.map((work: any, i: number) => {
             const { caption, rank } = work
             return (
