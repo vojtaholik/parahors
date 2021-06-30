@@ -58,10 +58,9 @@ const LandingPage: React.FC<{ works: any }> = ({ works }) => {
         <div className="grid w-full max-w-screen-2xl xl:grid-cols-3 sm:grid-cols-2 grid-cols-1 sm:gap-8 gap-5 mx-auto sm:pt-8 pt-5">
           {works.map((work: any, i: number) => {
             const { caption, rank } = work
-            const key = `${caption} (${rank})` || rank
             return (
               <div
-                key={key}
+                key={i}
                 className="flex flex-col items-center justify-center cursor-pointer "
               >
                 <div
@@ -72,7 +71,7 @@ const LandingPage: React.FC<{ works: any }> = ({ works }) => {
                     placeholder="blur"
                     quality={50}
                     src={require(`../public/${IMGS_DIR}/${work.src}`)}
-                    alt={key}
+                    alt={caption}
                     className="group-hover:scale-105 transition-transform ease-in-out duration-300 rounded-md"
                     loading={loadAll ? 'eager' : 'lazy'}
                   />
