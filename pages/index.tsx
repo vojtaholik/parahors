@@ -15,8 +15,8 @@ const lightboxOptions = {
   },
 }
 
-function getMetadata(name: string) {
-  const arr = name.split('-')
+function getMetadata(fileName: string) {
+  const arr = fileName.split('-')
   const caption = arr.length > 1 ? arr[1] : undefined
   const index = arr[0]
   function removeSuffix(string: string) {
