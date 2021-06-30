@@ -17,7 +17,7 @@ const lightboxOptions = {
 
 function getMetadata(fileName: string) {
   const arr = fileName.split('-')
-  const caption = arr.length > 1 ? arr[1] : undefined
+  const caption = arr.length > 1 ? arr[1] : null
   const index = arr[0]
   function removeSuffix(string: string) {
     return string
@@ -27,7 +27,7 @@ function getMetadata(fileName: string) {
       .replace('.jpeg', '')
   }
   return {
-    caption: caption ? removeSuffix(caption) : undefined,
+    caption: caption ? removeSuffix(caption) : null,
     index: removeSuffix(index),
   }
 }
