@@ -56,7 +56,7 @@ const LandingPage: React.FC<{ works: any }> = ({ works }) => {
       </div>
 
       <SRLWrapper options={lightboxOptions}>
-        <div className="grid w-full max-w-screen-2xl xl:grid-cols-3 sm:grid-cols-2 grid-cols-1 sm:gap-8 gap-5 mx-auto sm:pt-16 pt-10">
+        <div className="grid w-full max-w-screen-2xl lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 sm:gap-8 gap-5 mx-auto sm:pt-16 pt-10">
           {works.map((work: any, i: number) => {
             const { caption, rank } = work
             return (
