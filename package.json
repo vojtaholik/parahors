@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "lodash": "^4.17.21",
     "next": "11.0.1",
     "next-seo": "^4.26.0",
     "react": "17.0.2",
@@ -16,6 +17,7 @@
     "simple-react-lightbox": "^3.6.6"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.170",
     "@types/react": "17.0.11",
     "@types/simple-react-lightbox": "^3.6.0",
     "autoprefixer": "^10.2.6",

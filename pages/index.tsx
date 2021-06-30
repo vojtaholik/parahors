@@ -6,6 +6,8 @@ import path from 'path'
 import Image from 'next/image'
 import Logo from '../public/logo.jpeg'
 import { SRLWrapper } from 'simple-react-lightbox'
+import randomWords from 'public/random-words.json'
+import random from 'lodash/random'
 
 const { serverRuntimeConfig } = getConfig()
 const IMGS_DIR = 'illustrations'
@@ -27,7 +29,9 @@ function getMetadata(fileName: string) {
       .replace('.jpeg', '')
   }
   return {
-    caption: caption ? removeSuffix(caption) : null,
+    caption: caption
+      ? removeSuffix(caption)
+      : randomWords.words[random(0, randomWords.words.length)],
     index: removeSuffix(index),
   }
 }
@@ -36,30 +40,32 @@ const LandingPage: React.FC<{ works: any }> = ({ works }) => {
   const [loadAll, setLoadAll] = React.useState(false)
 
   return (
-    <div className="p-5">
-      <div className="min-h-[60vh] flex items-center justify-center">
-        <div className="max-w-screen-md">
-          <Image
-            priority={true}
-            src={Logo}
-            alt="Parahors"
-            quality={95}
-            placeholder="blur"
-          />
-        </div>
+    <div className="p-5 bg-gray-100 lg:pb-24 sm:pb-16 pb-8">
+      <div className="-mx-5">
+        <header className="min-h-[60vh] flex items-center justify-center w-full bg-white">
+          <div className="max-w-screen-md">
+            <Image
+              priority={true}
+              src={Logo}
+              alt="Parahors"
+              quality={95}
+              placeholder="blur"
+            />
+          </div>
+        </header>
       </div>
       <SRLWrapper options={lightboxOptions}>
-        <div className="grid w-full max-w-screen-2xl xl:grid-cols-3 md:grid-cols-2 grid-cols-1 lg:gap-8 mx-auto">
+        <div className="grid w-full max-w-screen-2xl xl:grid-cols-3 sm:grid-cols-2 grid-cols-1 sm:gap-8 gap-5 mx-auto sm:pt-8 pt-5">
           {works.map((work: any, i: number) => {
-            const { caption, index } = getMetadata(work.src)
-            const key = caption || index
+            const { caption, rank } = work
+            const key = `${caption} (${rank})` || rank
             return (
               <div
                 key={key}
-                className={`flex flex-col items-center justify-center cursor-pointer`}
+                className="flex flex-col items-center justify-center cursor-pointer "
               >
                 <div
-                  className="flex items-center justify-center w-full group rounded-md overflow-hidden"
+                  className="flex items-center justify-center w-full group rounded-md overflow-hidden bg-white"
                   onClick={() => !loadAll && setLoadAll(true)}
                 >
                   <Image
@@ -71,9 +77,10 @@ const LandingPage: React.FC<{ works: any }> = ({ works }) => {
                     loading={loadAll ? 'eager' : 'lazy'}
                   />
                 </div>
-                <div className="pt-4 text-xs font-mono text-gray-600">
-                  {caption}
-                </div>
+                {/* <div className="flex w-full items-center justify-between pt-4 text-xs font-mono text-gray-600">
+                  <div className="">{caption}</div>
+                  <div>{rank}</div>
+                </div> */}
               </div>
             )
           })}
@@ -95,6 +102,8 @@ export const getStaticProps: GetStaticProps = async () => {
     .map((work) => {
       return {
         src: work.name,
+        caption: getMetadata(work.name).caption,
+        rank: getMetadata(work.name).index,
       }
     })
 
