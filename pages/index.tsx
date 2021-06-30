@@ -65,7 +65,7 @@ const LandingPage: React.FC<{ works: any }> = ({ works }) => {
                 className="flex flex-col items-center justify-center cursor-pointer "
               >
                 <div
-                  className="flex items-center justify-center w-full group rounded-md overflow-hidden bg-white"
+                  className="relative flex items-center justify-center w-full group rounded-md overflow-hidden bg-white"
                   onClick={() => !loadAll && setLoadAll(true)}
                 >
                   <Image
@@ -76,11 +76,13 @@ const LandingPage: React.FC<{ works: any }> = ({ works }) => {
                     className="group-hover:scale-105 transition-transform ease-in-out duration-300 rounded-md"
                     loading={loadAll ? 'eager' : 'lazy'}
                   />
+                  {process.env.NODE_ENV === 'development' && (
+                    <div className="opacity-40 absolute left-3 bottom-3 flex w-full items-center justify-between pt-4 text-xs font-mono text-gray-600">
+                      {/* <div className="">{caption}</div> */}
+                      <div>{rank}</div>
+                    </div>
+                  )}
                 </div>
-                {/* <div className="flex w-full items-center justify-between pt-4 text-xs font-mono text-gray-600">
-                  <div className="">{caption}</div>
-                  <div>{rank}</div>
-                </div> */}
               </div>
             )
           })}
